@@ -1,8 +1,11 @@
+import Sidebar from "./Sidebar"
 
 const Layout = () => {
   return (
     <div>
-      Layout
+      
+    <Sidebar />
+
     </div>
   )
 }
