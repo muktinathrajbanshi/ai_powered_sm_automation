@@ -47,7 +47,22 @@ const Sidebar = ({
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
 
-          return <NavLink>{item.name}</NavLink>;
+          return (
+            <NavLink
+              key={item.nane}
+              to={item.path}
+              end={item.path === "/dashboard"}
+            >
+              onClick={() => setIsOpen(false)}
+              <item.icon
+                className={`size-4.5 shrink-0 ${isActive ? "text-red-500" : "text-slate-500"}`}
+              />
+              {item.name}
+              {isActive && (
+                <span className="ml-auto w-[5px] h-5 rounded-full bg-red-500" />
+              )}
+            </NavLink>
+          );
         })}
       </nav>
     </div>
