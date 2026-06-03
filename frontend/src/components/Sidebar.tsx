@@ -13,6 +13,13 @@ const Sidebar = ({
   isOpen: boolean;
   setIsOpen: (val: boolean) => void;
 }) => {
+  const { logout, user } = {
+    logout: () => {
+      window.location.href = "/";
+    },
+    user: { name: "John Doe", email: "johndoe@example.com" },
+  };
+
   const location = useLocation();
 
   const navItems = [
@@ -71,6 +78,21 @@ const Sidebar = ({
           );
         })}
       </nav>
+
+      {/* User footer  */}
+      <div className="p-4 border-t border-slate-100">
+        <div
+          className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50
+         transition-colors"
+        >
+          <div
+            className="size-8 rounded-full bg-linear-to-br from-red-400 to-pink-400
+          flex items-center justify-center text-white text-sm font-medium shrink-0"
+          >
+            {user?.name?.charAt(0).toUpperCase() || "U"}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

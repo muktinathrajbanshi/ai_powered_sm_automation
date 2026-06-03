@@ -1,5 +1,5 @@
 const Scheduler = () => {
-  return <div></div>;
+  return <div>Schedular</div>;
 };
 
 export default Scheduler;
