@@ -1,6 +1,7 @@
 import {
   CalendarDaysIcon,
   LayoutDashboardIcon,
+  LogOut,
   UserIcon,
   Wand2Icon,
 } from "lucide-react";
@@ -91,7 +92,20 @@ const Sidebar = ({
           >
             {user?.name?.charAt(0).toUpperCase() || "U"}
           </div>
+
+          <div className="flex-1 min-w-0">
+            <div className="text-sm text-slate-800 truncate">{user?.name}</div>
+            <div className="text-sm text-slate-400 truncate">{user?.email}</div>
+          </div>
         </div>
+
+        <button
+          className="mt-1 flex items-center gap-2 px-3 py-2 w-full rounded text-sm
+        text-slate-500 hover:bg-red-50 hover:text-red-500 transition-all duration-150"
+        >
+          <LogOut className="size-4" />
+          Sign Out
+        </button>
       </div>
     </div>
   );
