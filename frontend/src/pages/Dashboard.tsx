@@ -1,4 +1,9 @@
-import { CheckCircleIcon, ClockIcon, Share2Icon } from "lucide-react";
+import {
+  CheckCircleIcon,
+  ClockIcon,
+  Share2Icon,
+  TrendingUpIcon,
+} from "lucide-react";
 import { useState } from "react";
 
 const Dashboard = () => {
@@ -41,7 +46,24 @@ const Dashboard = () => {
       </div>
 
       {/* Stat cards  */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"></div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        {statCards.map((card) => (
+          <div
+            key={card.label}
+            className="bg-white hover:bg-red-50 relative border
+          border-slate-200 rounded-2xl p-5 hover:border-red-200 transition-all"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div>{card.value}</div>
+              <div className="text-xs absolute right-4 top-4 text-red-500 flex items-center gap-1">
+                <TrendingUpIcon className="size-3" />
+                {card.trend}
+              </div>
+            </div>
+            <p className="text-sm text-slate-500 mt-1">{card.label}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
