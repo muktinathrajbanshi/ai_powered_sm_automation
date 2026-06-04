@@ -1,7 +1,7 @@
 import {
   CalendarDaysIcon,
   LayoutDashboardIcon,
-  LogOut,
+  LogOutIcon,
   UserIcon,
   Wand2Icon,
 } from "lucide-react";
@@ -100,10 +100,11 @@ const Sidebar = ({
         </div>
 
         <button
+          onClick={logout}
           className="mt-1 flex items-center gap-2 px-3 py-2 w-full rounded text-sm
         text-slate-500 hover:bg-red-50 hover:text-red-500 transition-all duration-150"
         >
-          <LogOut className="size-4" />
+          <LogOutIcon className="size-4" />
           Sign Out
         </button>
       </div>
