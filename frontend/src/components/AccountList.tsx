@@ -1,4 +1,5 @@
 import { PlusIcon } from "lucide-react";
+import { PLATFORMS } from "../assets/assets";
 
 interface AccountListProps {
   accounts: any[];
@@ -26,11 +27,31 @@ const AccountList = ({ accounts, onDisconnect }: AccountListProps) => {
         >
           <PlusIcon className="size-6 text-slate-500 opacity-50" />
         </div>
+        <p className="text-slate-700 text-lg">No accounts connected</p>
+        <p className="text-sm text-slate-400 mt-1 max-w-xs text-center">
+          connect your first social platform to start scheduling and automating
+          your content.
+        </p>
       </div>
     );
   }
 
-  return <div></div>;
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {accounts.map((account, index) => {
+        const meta = PLATFORMS.find((p) => p.id === account.platform);
+        if (!meta) return null;
+
+        return (
+          <div
+            key={index}
+            className="group bg-white border border-slate-200
+                rounded-2xl p-5 flex items-center gap-4 hover:border-slate-300 transition-all"
+          ></div>
+        );
+      })}
+    </div>
+  );
 };
 
 export default AccountList;
