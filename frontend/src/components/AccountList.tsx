@@ -47,7 +47,18 @@ const AccountList = ({ accounts, onDisconnect }: AccountListProps) => {
             key={index}
             className="group bg-white border border-slate-200
                 rounded-2xl p-5 flex items-center gap-4 hover:border-slate-300 transition-all"
-          ></div>
+          >
+            <div>
+              <meta.icon className="size-6 text-slate-500" />
+            </div>
+            <div>
+              <div className="text-slate-900 truncate">{account.handle}</div>
+              <div className="text-sm text-slate-500 mt-0.5">{meta.name}</div>
+            </div>
+            <div className="flex items-center gap-1.5 shrink-0">
+              {account.status === "connected" ? <></> : <></>}
+            </div>
+          </div>
         );
       })}
     </div>
