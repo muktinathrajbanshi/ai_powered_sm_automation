@@ -6,7 +6,12 @@ import {
   Share2Icon,
   TrendingUpIcon,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  dummyAccountsData,
+  dummyActivityData,
+  dummyPostsData,
+} from "../assets/assets";
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -15,6 +20,30 @@ const Dashboard = () => {
     connectedAccounts: 0,
   });
   const [activities, setActivities] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const [postsRes, accountRes, activityRes] = [
+          { data: dummyPostsData },
+          { data: dummyAccountsData },
+          { data: dummyActivityData },
+        ];
+        const posts = postsRes.data;
+        setStats({
+          scheduled: posts.filter((p: any) => p.status === "scheduled").length,
+          published: posts.filter((p: any) => p.status === "published").length,
+          connectedAccounts: accountRes.data.filter(
+            (a: any) => a.status === "connected",
+          ).length,
+        });
+        setActivities(activityRes.data);
+      } catch (error: any) {
+        console.error("Error fetchig dashboard data", error);
+      }
+    };
+    fetchDashboardData();
+  }, []);
 
   const statCards = [
     {
@@ -99,7 +128,19 @@ const Dashboard = () => {
                 <div className="size-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5 bg-zinc-100 text-zinc-600">
                   <SendIcon className="size-4" />
                 </div>
-                <div></div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-600">
+                      Published
+                    </span>
+                    <span className="text-xs text-slate-400 shrink-0">
+                      {new Date(activity.createdAt).toLocaleString()}
+                    </span>
+                  </div>
+                  <p className="text-sm text-slate-600">
+                    {activity.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
