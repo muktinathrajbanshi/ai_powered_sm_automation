@@ -1,4 +1,9 @@
-import { PlusIcon } from "lucide-react";
+import {
+  AlertCircleIcon,
+  CheckCircleIcon,
+  PlusIcon,
+  UnplugIcon,
+} from "lucide-react";
 import { PLATFORMS } from "../assets/assets";
 
 interface AccountListProps {
@@ -56,8 +61,25 @@ const AccountList = ({ accounts, onDisconnect }: AccountListProps) => {
               <div className="text-sm text-slate-500 mt-0.5">{meta.name}</div>
             </div>
             <div className="flex items-center gap-1.5 shrink-0">
-              {account.status === "connected" ? <></> : <></>}
+              {account.status === "connected" ? (
+                <>
+                  <CheckCircleIcon className="size-4 text-emerald-500" />
+                  <span className="text-xs text-emerald-600">Connected</span>
+                </>
+              ) : (
+                <>
+                  <AlertCircleIcon className="size-4 text-amber-500" />
+                  <span className="text-xs text-amber-600">Disconnected</span>
+                </>
+              )}
             </div>
+
+            <button
+              className="ml-2 p-1.5 rounded-lg text-slate-300
+              group-hover:text-red-500 transition-all"
+            >
+              <UnplugIcon className="size-4" />
+            </button>
           </div>
         );
       })}
