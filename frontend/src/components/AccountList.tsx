@@ -27,8 +27,8 @@ const AccountList = ({ accounts, onDisconnect }: AccountListProps) => {
         flex flex-col items-center justify-center py-20 px-6"
       >
         <div
-          className="bg-white rounded-2xl border-2 border-dashed border-slate-200
-        flex flex-col items-center justify-center py-20 px-6"
+          className="size-14 bg-slate-50 rounded-2xl flex items-center justify-center mb-4
+          border border-slate-100"
         >
           <PlusIcon className="size-6 text-slate-500 opacity-50" />
         </div>
@@ -75,6 +75,8 @@ const AccountList = ({ accounts, onDisconnect }: AccountListProps) => {
             </div>
 
             <button
+              onClick={() => handleDisconnect(account._id)}
+              title="Disconnect account"
               className="ml-2 p-1.5 rounded-lg text-slate-300
               group-hover:text-red-500 transition-all"
             >
