@@ -96,6 +96,29 @@ const Scheduler = () => {
             </div>
 
             {/* Media upload  */}
+            <div>
+              <label className="block text-xs text-slate-500 uppercase mb-2">
+                Media (optional)
+              </label>
+              {mediaFile ? (
+                <div className="relative rounded-xl overflow-hidden border border-slate-200 bg-slate-50">
+                  {mediaFile.type.startsWith("image/") ? (
+                    <img
+                      src={URL.createObjectURL(mediaFile)}
+                      alt="prview"
+                      className="w-full h-40 object-cover"
+                    />
+                  ) : (
+                    <video
+                      src={URL.createObjectURL(mediaFile)}
+                      className="w-full h-40 object-cover"
+                    />
+                  )}
+                </div>
+              ) : (
+                <label></label>
+              )}
+            </div>
 
             {/* Date & Time  */}
 
