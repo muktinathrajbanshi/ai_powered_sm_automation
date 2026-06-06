@@ -75,6 +75,18 @@ const Scheduler = () => {
             </div>
 
             {/* Content  */}
+            <div>
+              <label className="block text-xs text-slate-500 uppercase mb-2">
+                Content
+              </label>
+              <textarea
+                required
+                rows={5}
+                placeholder="What do you want to share today?"
+                className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl
+              text-slate-900 text-sm placeholder-slate-400 outline-none resize-none"
+              />
+            </div>
 
             {/* Media upload  */}
 
