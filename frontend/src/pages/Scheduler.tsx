@@ -28,6 +28,15 @@ const Scheduler = () => {
       prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id],
     );
 
+  const handleSchedule = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setPosts((prev) => [...prev, dummyPostsData[0]]);
+    }, 1000);
+  };
+
   return (
     <div className="flex flex-col lg:flex-row gap-6 h-full">
       {/* Compose panel  */}
@@ -37,7 +46,7 @@ const Scheduler = () => {
             <h2 className="text-lg text-slate-700">Compose Post</h2>
           </div>
 
-          <form className="space-y-5">
+          <form className="space-y-5" onSubmit={handleSchedule}>
             {/* Platforms  */}
             <div>
               <label className="block text-xs text-slate-500 uppercase mb-2">
@@ -48,6 +57,7 @@ const Scheduler = () => {
                   const active = selectedPlatforms.includes(p.id);
                   return (
                     <button
+                      onClick={() => togglePlatform(p.id)}
                       key={p.id}
                       type="button"
                       className={`flex items-center gap-1.5 p-3 rounded-md border transition-all duration-150 
