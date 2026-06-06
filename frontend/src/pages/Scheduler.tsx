@@ -23,6 +23,11 @@ const Scheduler = () => {
   const scheduled = posts.filter((p) => p.status === "scheduled");
   const published = posts.filter((p) => p.status === "published");
 
+  const togglePlatform = (id: string) =>
+    setSelectedPlatforms((prev) =>
+      prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id],
+    );
+
   return (
     <div className="flex flex-col lg:flex-row gap-6 h-full">
       {/* Compose panel  */}
