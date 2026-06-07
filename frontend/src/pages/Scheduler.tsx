@@ -249,7 +249,21 @@ const Scheduler = () => {
                 <div
                   key={post._id}
                   className="px-5 py-4 hover:bg-slate-50/60 transition-colors"
-                ></div>
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      {post.platforms.map((pl: string) => {
+                        const meta = PLATFORMS.find((p) => p.id === pl);
+                        return meta ? (
+                          <meta.icon
+                            key={pl}
+                            className="size-3.5 text-slate-400"
+                          />
+                        ) : null;
+                      })}
+                    </div>
+                  </div>
+                </div>
               ))
             )}
           </div>
