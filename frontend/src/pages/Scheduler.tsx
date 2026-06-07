@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { dummyPostsData, PLATFORMS } from "../assets/assets";
-import { ArrowRightIcon, CalendarIcon, ClockIcon, XIcon } from "lucide-react";
+import {
+  ArrowRightIcon,
+  CalendarDaysIcon,
+  CalendarIcon,
+  ClockIcon,
+  XIcon,
+} from "lucide-react";
 
 const Scheduler = () => {
   const [posts, setPosts] = useState<any[]>([]);
@@ -220,6 +226,16 @@ const Scheduler = () => {
       </div>
 
       {/* Queue panels  */}
+      <div className="flex-1 flex flex-col gap-6 min-w-0">
+        {/* Upcoming  */}
+        <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+          <div className="flex items-center gap-2.5 px-5 py-4 border-b border-slate-100">
+            <CalendarDaysIcon className="size-4 text-zinc-500" />
+          </div>
+        </div>
+
+        {/* Published  */}
+      </div>
     </div>
   );
 };
