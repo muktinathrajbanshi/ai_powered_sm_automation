@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { dummyPostsData, PLATFORMS } from "../assets/assets";
+import { XIcon } from "lucide-react";
 
 const Scheduler = () => {
   const [posts, setPosts] = useState<any[]>([]);
@@ -112,11 +113,31 @@ const Scheduler = () => {
                     <video
                       src={URL.createObjectURL(mediaFile)}
                       className="w-full h-40 object-cover"
+                      controls
                     />
                   )}
+                  <button
+                    type="button"
+                    onClick={() => setMediaFile(null)}
+                    className="absolute top-2 right-2 size-7 bg-slate-900/60
+                  hover:bg-slate-900/80 text-white rounded-full flex items-center
+                  justify-center transition-colors"
+                  >
+                    <XIcon className="size-3.5" />
+                  </button>
                 </div>
               ) : (
-                <label></label>
+                <label>
+                  <span>Click to upload image or video</span>
+                  <input
+                    type="file"
+                    accept="image/*,video/*"
+                    className="hidden"
+                    onChange={(e) =>
+                      e.target.files?.[0] && setMediaFile(e.target.files[0])
+                    }
+                  />
+                </label>
               )}
             </div>
 
