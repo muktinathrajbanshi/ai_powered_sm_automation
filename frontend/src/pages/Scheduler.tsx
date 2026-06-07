@@ -251,7 +251,7 @@ const Scheduler = () => {
                   className="px-5 py-4 hover:bg-slate-50/60 transition-colors"
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <div>
+                    <div className="flex gap-1.5 items-center">
                       {post.platforms.map((pl: string) => {
                         const meta = PLATFORMS.find((p) => p.id === pl);
                         return meta ? (
@@ -262,7 +262,25 @@ const Scheduler = () => {
                         ) : null;
                       })}
                     </div>
+                    <div className="flex items-center gap-2">
+                      {post.mediaType && (
+                        <span
+                          className="text-xs bg-slate-100
+                      text-slate-600 border border-slate-200 px-1.5 py-0.5 rounded-md
+                      font-semibold capitalize"
+                        >
+                          {post.mediaType}
+                        </span>
+                      )}
+
+                      <span className="text-xs text-slate-400">
+                        {new Date(post.scheduledFor).toLocaleString()}
+                      </span>
+                    </div>
                   </div>
+                  <p className="text-sm text-slate-500 line-clamp-2 max-w-md">
+                    {post.content}
+                  </p>
                 </div>
               ))
             )}
