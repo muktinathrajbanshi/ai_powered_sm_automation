@@ -231,6 +231,27 @@ const Scheduler = () => {
         <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
           <div className="flex items-center gap-2.5 px-5 py-4 border-b border-slate-100">
             <CalendarDaysIcon className="size-4 text-zinc-500" />
+            <h3 className="text-slate-900 text-sm">Upcoming</h3>
+            <span
+              className="ml-auto text-xs font-bold bg-zinc-100 text-zinc-700
+            px-2 py-0.5 rounded-full"
+            >
+              {scheduled.length}
+            </span>
+          </div>
+          <div className="max-h-72 overflow-y-auto divide-y divide-slate-50">
+            {scheduled.length === 0 ? (
+              <div className="py-10 text-center text-slate-400 text-sm">
+                No posts scheduled yet
+              </div>
+            ) : (
+              scheduled.map((post) => (
+                <div
+                  key={post._id}
+                  className="px-5 py-4 hover:bg-slate-50/60 transition-colors"
+                ></div>
+              ))
+            )}
           </div>
         </div>
 
