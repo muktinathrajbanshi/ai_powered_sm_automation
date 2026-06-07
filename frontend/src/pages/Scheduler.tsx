@@ -345,7 +345,7 @@ const Scheduler = () => {
                       </span>
                     </div>
                   </div>
-                  <p className="text-sm text-slate-500 line-clamp-2 max-w-md">
+                  <p className="text-sm text-slate-500 line-clamp-2 max-w-4/5">
                     {post.content}
                   </p>
                 </div>

@@ -1,10 +1,16 @@
+import { useState } from "react";
 
 const AIComposer = () => {
-  return (
-    <div>
-      AIComposer
-    </div>
-  )
-}
+  const [prompt, setPrompt] = useState("");
+  const [tone, setTone] = useState("Professional");
+  const [generateImage, setGenerateImage] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [generations, setGenerations] = useState<any[]>([]);
 
-export default AIComposer
+  // Scheduling state
+  const [activeScheduler, setActiveScheduler] = useState<any>(null);
+
+  return <div>AIComposer</div>;
+};
+
+export default AIComposer;
