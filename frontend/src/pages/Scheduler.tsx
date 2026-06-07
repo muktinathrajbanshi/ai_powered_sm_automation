@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { dummyPostsData, PLATFORMS } from "../assets/assets";
-import { XIcon } from "lucide-react";
+import { CalendarIcon, XIcon } from "lucide-react";
 
 const Scheduler = () => {
   const [posts, setPosts] = useState<any[]>([]);
@@ -127,8 +127,14 @@ const Scheduler = () => {
                   </button>
                 </div>
               ) : (
-                <label>
-                  <span>Click to upload image or video</span>
+                <label
+                  className="flex items-center justify-center gap-2 p-5 py-10
+                border-2 border-dashed border-slate-200 rounded-xl cursor-pointer
+                hover:border-red-300 hover:bg-red-50/30 transition-all group"
+                >
+                  <span className="text-sm text-slate-500 group-hover:text-red-600 transition-colors">
+                    Click to upload image or video
+                  </span>
                   <input
                     type="file"
                     accept="image/*,video/*"
@@ -139,9 +145,23 @@ const Scheduler = () => {
                   />
                 </label>
               )}
+              g
             </div>
 
             {/* Date & Time  */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs text-slate-500 uppercase mb-2">
+                  Date
+                </label>
+                <div className="relative">
+                  <CalendarIcon
+                    className="size-4 absolute left-3 top-1/2 -translate-y-1/2
+                  text-slate-400 pointer-events-none"
+                  />
+                </div>
+              </div>
+            </div>
 
             {/* Submit  */}
           </form>

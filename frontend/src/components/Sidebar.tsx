@@ -18,7 +18,10 @@ const Sidebar = ({
     logout: () => {
       window.location.href = "/";
     },
-    user: { name: "John Doe", email: "johndoe@example.com" },
+    user: {
+      name: "Muktinath Rajbanshi",
+      email: "muktinathrajbanshi786@gmail.com",
+    },
   };
 
   const location = useLocation();
