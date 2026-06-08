@@ -5,6 +5,7 @@ import {
   HistoryIcon,
   Loader2Icon,
   Wand2Icon,
+  XIcon,
 } from "lucide-react";
 
 const AIComposer = () => {
@@ -194,6 +195,53 @@ const AIComposer = () => {
       </div>
 
       {/* Scheduler Modal  */}
+      {activeScheduler && (
+        <div
+          className="fixed inset-0 min-h-screen z-50 flex items-center justify-center p-4
+        bg-slate-900/40 backdrop-blur-md animate-in fade-in duration-300"
+        >
+          <div
+            className="bg-white rounded-xl shadow-2xl w-full max-w-2xl border
+          border-slate-100 overflow-hidden flex flex-col max-h-[90vh]"
+          >
+            <div
+              className="flex items-center justify-between px-8 py-4 border-b
+            border-slate-100 bg-slate-50/30"
+            >
+              <h3 className="text-slate-900">Schedule Generation</h3>
+              <button
+                onClick={() => setActiveScheduler(null)}
+                className="p-2 rounded-full hover:bg-slate-100 text-slate-400
+              transition-colors"
+              >
+                <XIcon className="size-5" />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-8 space-y-4">
+              <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 space-y-4">
+                <p className="text-slate-800 text-sm leading-relaxed whitespace-pre-wrap">
+                  {activeScheduler.prompt}
+                </p>
+              </div>
+
+              <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 space-y-4">
+                <p className="text-slate-800 text-sm leading-relaxed whitespace-pre-wrap">
+                  {activeScheduler.content}
+                </p>
+                {activeScheduler.mediaUrl && (
+                  <img
+                    src={activeScheduler.mediaUrl}
+                    alt="preview"
+                    className="w-full aspect-video object-cover rounded-xl border
+                  border-slate-200 shadow-sm"
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
