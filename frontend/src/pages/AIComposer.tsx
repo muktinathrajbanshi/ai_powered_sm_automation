@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { dummyGenerationData, PLATFORMS } from "../assets/assets";
 import {
   ArrowRightIcon,
+  CalendarIcon,
   HistoryIcon,
   Loader2Icon,
   Wand2Icon,
@@ -273,6 +274,21 @@ const AIComposer = () => {
                         </button>
                       );
                     })}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <CalendarIcon
+                      className="size-4 absolute left-4 top-1/2 -translate-y-1/2
+                    text-slate-400"
+                    />
+                    <input
+                      type="date"
+                      className="w-full pl-11 pr-4 py-3 bg-slate-50 border
+                    border-slate-100 rounded-md text-slate-900 text-sm focus:outline-none
+                    transition-all"
+                    />
                   </div>
                 </div>
               </div>
