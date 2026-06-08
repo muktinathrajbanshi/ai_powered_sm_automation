@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { dummyGenerationData } from "../assets/assets";
+import { dummyGenerationData, PLATFORMS } from "../assets/assets";
 import {
   ArrowRightIcon,
   HistoryIcon,
@@ -250,7 +250,30 @@ const AIComposer = () => {
                   >
                     Select Channels
                   </label>
-                  <div className="flex flex-wrap gap-2"></div>
+                  <div className="flex flex-wrap gap-2">
+                    {PLATFORMS.map((p) => {
+                      const active = selectedPlatforms.includes(p.id);
+                      return (
+                        <button
+                          key={p.id}
+                          onClick={() =>
+                            setSelectedPlatforms((prev) =>
+                              prev.includes(p.id)
+                                ? prev.filter((x) => x !== p.id)
+                                : [...prev, p.id],
+                            )
+                          }
+                          className={`p-2.5 rounded-md border text-xs ${
+                            active
+                              ? "bg-red-500/80 text-white"
+                              : "bg-white border-slate-200 text-slate-400 hover:border-slate-300"
+                          }`}
+                        >
+                          <p.icon className="size-4.5" />
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
