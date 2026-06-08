@@ -40,6 +40,13 @@ const AIComposer = () => {
     }, 2000);
   };
 
+  const handleSchedule = async () => {
+    setScheduling(true);
+    setTimeout(() => {
+      setScheduling(false);
+    }, 2000);
+  };
+
   const tones = ["Professional", "Creative", "Funny", "Minimalist", "Excited"];
 
   return (
@@ -311,6 +318,7 @@ const AIComposer = () => {
                 </div>
               </div>
               <button
+                onClick={handleSchedule}
                 className="w-full flex items-center justify-center gap-2 py-3
               rounded-md bg-slate-200 text-slate-700 hover:bg-red-500 hover:text-white
               transition"
