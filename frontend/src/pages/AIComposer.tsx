@@ -278,7 +278,7 @@ const AIComposer = () => {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
+                  <div className="relative">
                     <CalendarIcon
                       className="size-4 absolute left-4 top-1/2 -translate-y-1/2
                     text-slate-400"
@@ -288,6 +288,8 @@ const AIComposer = () => {
                       className="w-full pl-11 pr-4 py-3 bg-slate-50 border
                     border-slate-100 rounded-md text-slate-900 text-sm focus:outline-none
                     transition-all"
+                      value={scheduledDate}
+                      onChange={(e) => setScheduledDate(e.target.value)}
                     />
                   </div>
                 </div>
