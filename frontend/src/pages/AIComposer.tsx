@@ -239,6 +239,21 @@ const AIComposer = () => {
                 )}
               </div>
             </div>
+
+            <div className="p-8 bg-slate-50/50 border-t border-slate-50 space-y-8">
+              {/* options  */}
+              <div className="space-y-6">
+                <div>
+                  <label
+                    className="block text-xs text-slate-600 uppercase
+                  tracking-widest mb-4"
+                  >
+                    Select Channels
+                  </label>
+                  <div className="flex flex-wrap gap-2"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
