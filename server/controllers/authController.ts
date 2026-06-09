@@ -1,6 +1,13 @@
 import { Request, Response } from "express";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+const generateToken = (id: string) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET || "fallback_secret", {
+    expiresIn: "30d",
+  });
+};
 
 // Register user
 // POST /api/auth/register
@@ -25,7 +32,12 @@ export const registerUser = async (
     if (user) {
       res
         .status(201)
-        .json({ _id: user._id, name: user.name, email: user.email });
+        .json({
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          token: generateToken(user._id.toString()),
+        });
     } else {
       res.status(400).json({ message: "Invalid user data" });
     }
