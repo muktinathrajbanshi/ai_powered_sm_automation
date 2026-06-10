@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import zernio from "../config/zernio.js";
 import { User } from "../models/User.js";
+import { Account } from "../models/Account.js";
 
 // Helper to ensure user has a Zernio Profile.
 const getOrCreateZernioProfile = async (user: any): Promise<string> => {
@@ -90,7 +91,7 @@ export const syncAccounts = async (
     const zernioAccounts: any[] =
       data?.accounts || (Array.isArray(data) ? data : []);
     const supportedPlatforms = ["twitter", "linkedin", "facebook", "instagram"];
-    const syncAccounts = [];
+    const syncedAccounts = [];
 
     for (const zAccount of zernioAccounts) {
       const zid = zAccount._id || zAccount.id;
@@ -107,6 +108,32 @@ export const syncAccounts = async (
       const normalizedPlatform = supportedPlatforms.find((p) =>
         rawPlatform.includes(p),
       );
+
+      if (!normalizedPlatform) {
+        console.log(`Skipping unsupported platform: "${rawPlatform}"`);
+        continue;
+      }
+
+      const account = await Account.findOneAndUpdate(
+        { zernioAccountId: zid },
+        {
+          user: req.user._id,
+          platform: normalizedPlatform,
+          handle:
+            zAccount.username || zAccount.name || zAccount.handle || "Unknown",
+          zernioAccountId: zid,
+          status: "connected",
+          avatarUrl:
+            zAccount.avatarUrl ||
+            zAccount.picture ||
+            zAccount.profile_image_url,
+        },
+        { upsert: true, returnDocument: "after" },
+      );
+      syncedAccounts.push(account);
     }
-  } catch (error) {}
+    res.json(syncedAccounts);
+  } catch (error: any) {
+    res.status(500).json({ message: error?.message || "Server error" });
+  }
 };
