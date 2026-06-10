@@ -16,7 +16,24 @@ const getOrCreateZernioProfile = async (user: any): Promise<string> => {
       await User.findByIdAndUpdate(user._id, { zernioProfileId: pid });
       return pid;
     }
-  } catch (error) {}
+
+    const createResult = await zernio.profiles.createProfile({
+      body: { name: `${user.name || user.email}'s workspace` } as any,
+    });
+    const created = (createResult.data as any)?.profile || createResult.data;
+
+    const pid = created?._id || created?.id;
+
+    if (!pid) {
+      throw new Error("Failed to create Zernio profile - no ID returned");
+    }
+
+    await User.findByIdAndUpdate(user._id, { zernioProfileId: pid });
+    return pid;
+  } catch (error: any) {
+    console.error("getOrCreateZernioProfile Error:", error?.message || error);
+    throw error;
+  }
 };
 
 // Generate OAuth authorization URL
@@ -27,5 +44,20 @@ export const generateAuthUrl = async (
 ): Promise<void> => {
   try {
     const { platform } = req.params;
+    const profileId = await getOrCreateZernioProfile(req.user);
+
+    const origin = req.headers.origin;
+    const redirectUrl = `${origin}/accounts`;
+
+    const result = await zernio.connect.getConnectUrl({
+      path: { platform: platform as any },
+      query: {
+        profileId,
+        redirectUrl: redirectUrl,
+      },
+    });
+
+    const data = result.data as any;
+    console.log("getConnectUrl response:, JSON.stringfy(data, null, 2)");
   } catch (error) {}
 };
