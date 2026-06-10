@@ -58,6 +58,55 @@ export const generateAuthUrl = async (
     });
 
     const data = result.data as any;
-    console.log("getConnectUrl response:, JSON.stringfy(data, null, 2)");
+    console.log("getConnectUrl response:, JSON.stringify(data, null, 2)");
+
+    const authUrl = data.authUrl;
+
+    if (!authUrl) {
+      throw new Error(
+        `Zernio returned no authUrl. Full response: ${JSON.stringify(data)}`,
+      );
+    }
+
+    res.json({ url: authUrl });
+  } catch (error: any) {
+    res.status(500).json({ message: error?.message || "Server error" });
+  }
+};
+
+// Sync connected accounts from Zernio into MongoDB
+// GET /api/auth/sync
+export const syncAccounts = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const profileId = await getOrCreateZernioProfile(req.user);
+    const result = await zernio.accounts.listAccounts({
+      query: { profileId } as any,
+    });
+
+    const data = result.data as any;
+    const zernioAccounts: any[] =
+      data?.accounts || (Array.isArray(data) ? data : []);
+    const supportedPlatforms = ["twitter", "linkedin", "facebook", "instagram"];
+    const syncAccounts = [];
+
+    for (const zAccount of zernioAccounts) {
+      const zid = zAccount._id || zAccount.id;
+      if (!zid) {
+        console.warn("Skipping account with no ID:", zAccount);
+        continue;
+      }
+
+      const rawPlatform = (
+        zAccount.platform ||
+        zAccount.type ||
+        ""
+      ).toLowerCase();
+      const normalizedPlatform = supportedPlatforms.find((p) =>
+        rawPlatform.includes(p),
+      );
+    }
   } catch (error) {}
 };
