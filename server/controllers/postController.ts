@@ -156,7 +156,16 @@ export const generatePost = async (
 export const getGenerations = async (
   req: AuthRequest,
   res: Response,
-): Promise<void> => {};
+): Promise<void> => {
+  try {
+    const generations = await Generation.find({ user: req.user._id }).sort({
+      createdAt: -1,
+    });
+    res.json(generations);
+  } catch (error: any) {
+    res.status(500).json({ message: error?.message || "Server error" });
+  }
+};
 
 // Schedule post
 // POST /api/posts/
