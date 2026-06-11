@@ -27,8 +27,25 @@ export const generatePost = async (
     // Generate Text
     const textResponse = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      contents: ``,
+      contents: `Generate a social media post based on this prompt: "${prompt}".
+            Tone: ${tone}.
+            Include relevant hashtags.
+            Format the response as JSON with "content" and "imagePrompt" fields. 
+            The "imagePrompt" should be a highly descriptive prompt for an image generator
+            that complements the post.`,
     });
+
+    let content = "";
+    let imagePrompt = prompt;
+
+    try {
+      const rawText = textResponse.text || "";
+      const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+      const data = jsonMatch
+        ? JSON.parse(jsonMatch[0])
+        : { content: rawText, imagePrompt: prompt };
+      content = data.content;
+    } catch (error) {}
   } catch (error) {}
 };
 
