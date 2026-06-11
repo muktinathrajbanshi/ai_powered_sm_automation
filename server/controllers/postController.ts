@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { AuthRequest } from "../middlewares/authMiddleware.js";
 import { GoogleGenAI } from "@google/genai";
+import axios from "axios";
 
 // Generate post
 // POST /api/posts/generate
@@ -45,7 +46,35 @@ export const generatePost = async (
         ? JSON.parse(jsonMatch[0])
         : { content: rawText, imagePrompt: prompt };
       content = data.content;
-    } catch (error) {}
+      imagePrompt = data.imagePrompt;
+    } catch (e) {
+      content = textResponse.text || "";
+    }
+
+    let mediaUrl = "";
+    if (generateImage) {
+      try {
+        const leonardoKey = process.env.LEONARDO_API_KEY;
+        if (leonardoKey) {
+          // Use Leonardo.ai for image generation
+          const leoResponse = await axios.post(
+            "https://cloud.leonardo.ai/api/rest/v2/generations",
+            {
+              public: false,
+              model: "gpt-image-2",
+              parameters: {
+                quality: "MEDIUM",
+                prompt: "Koala with purple hat",
+                quantity: 2,
+                width: 1376,
+                height: 768,
+                prompt_enhance: "OFF",
+              },
+            },
+          );
+        }
+      } catch (error) {}
+    }
   } catch (error) {}
 };
 
