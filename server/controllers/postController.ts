@@ -3,6 +3,17 @@ import { AuthRequest } from "../middlewares/authMiddleware.js";
 import { GoogleGenAI } from "@google/genai";
 import axios from "axios";
 
+// Helper to poll Leonardo.ai
+const pollLeonardoJob = async (
+  generationId: string,
+  apiKey: string,
+): Promise<string> => {
+  const maxRetries = 20;
+  const delay = 5000;
+
+  for (let i; i < maxRetries; i++) {}
+};
+
 // Generate post
 // POST /api/posts/generate
 export const generatePost = async (
@@ -63,15 +74,25 @@ export const generatePost = async (
               public: false,
               model: "gpt-image-2",
               parameters: {
-                quality: "MEDIUM",
-                prompt: "Koala with purple hat",
-                quantity: 2,
-                width: 1376,
-                height: 768,
+                quality: "LOW",
+                prompt: imagePrompt,
+                quantity: 1,
+                width: 1024,
+                height: 1024,
                 prompt_enhance: "OFF",
               },
             },
+            {
+              headers: {
+                accept: "application/json",
+                authorization: `Bearer ${leonardoKey}`,
+                "content-type": "application/json",
+              },
+            },
           );
+
+          const generationId = leoResponse.data.generate.generationId;
+          const tempUrl = await generationId;
         }
       } catch (error) {}
     }
