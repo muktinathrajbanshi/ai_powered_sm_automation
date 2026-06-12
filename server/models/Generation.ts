@@ -1,34 +1,15 @@
 import mongoose from "mongoose";
 
-const accountSchema = new mongoose.Schema(
+const generationSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    platform: {
-      type: String,
-      enum: [
-        "twitter",
-        "linkedin",
-        "facebook",
-        "instagram",
-        "facebook_page",
-        "linkedin_page",
-        "instagram_business",
-      ],
-      required: true,
-    },
-    handle: { type: String, required: true },
-    zernioAccountId: { type: String },
-    accessToken: { type: String },
-    refreshToken: { type: String },
-    tokenExpiresAt: { type: Date },
-    status: {
-      type: String,
-      enum: ["connected", "disconnected"],
-      default: "connected",
-    },
-    avatarUrl: { type: String },
+    prompt: { type: String, required: true },
+    content: { type: String, required: true },
+    mediaUrl: { type: String },
+    mediaType: { type: String, enum: ["image", "video"] },
+    tone: { type: String },
   },
   { timestamps: true },
 );
 
-export const Account = mongoose.model("Account", accountSchema);
+export const Generation = mongoose.model("Generation", generationSchema);
