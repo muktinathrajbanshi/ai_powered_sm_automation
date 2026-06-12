@@ -1,6 +1,7 @@
 import cron from "node-cron";
 import { Post } from "../models/Post.js";
 import { Account } from "../models/Account.js";
+import zernio from "../config/zernio.js";
 
 export const initScheduler = () => {
   cron.schedule("* * * * *", async () => {
@@ -43,6 +44,25 @@ export const initScheduler = () => {
               : {}),
             platforms: zernioPlatforms,
           };
+          console.log(
+            `Publishing post ${post._id} to Zernio with media: ${post.mediaUrl || "none"}`,
+          );
+
+          const response = await zernio.posts.createPost({
+            body: payload,
+          });
+
+          const publishedPost = (response.data as any)?.post || response.data;
+
+          if (!publishedPost) {
+            throw new Error("Failed to get post object from zernio response");
+          }
+
+          console.log(
+            `Zernio post created: ${publishedPost._id || publishedPost.id}`,
+          );
+
+          post.status = "published";
         } catch (error) {}
       }
     } catch (error) {}
