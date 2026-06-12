@@ -26,6 +26,23 @@ export const initScheduler = () => {
             );
             continue;
           }
+          const zernioPlatforms = accounts.map((acc) => ({
+            tform: acc.platform as any,
+            accountId: acc.zernioAccountId!,
+          }));
+
+          const payload = {
+            content: post.content,
+            publishNow: true,
+            ...(post.mediaUrl
+              ? {
+                  mediaItems: [
+                    { type: post.mediaType || "image", url: post.mediaUrl },
+                  ],
+                }
+              : {}),
+            platforms: zernioPlatforms,
+          };
         } catch (error) {}
       }
     } catch (error) {}
