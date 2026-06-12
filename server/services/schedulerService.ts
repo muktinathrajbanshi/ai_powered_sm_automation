@@ -2,6 +2,7 @@ import cron from "node-cron";
 import { Post } from "../models/Post.js";
 import { Account } from "../models/Account.js";
 import zernio from "../config/zernio.js";
+import { ActivityLog } from "../models/ActivityLog.js";
 
 export const initScheduler = () => {
   cron.schedule("* * * * *", async () => {
@@ -63,8 +64,31 @@ export const initScheduler = () => {
           );
 
           post.status = "published";
-        } catch (error) {}
+          await post.save();
+
+          await ActivityLog.create({
+            user: post.user,
+            actionType: "POST_PUBLISHED",
+            description: `Published post to ${accounts.map((a) => a.platform).join(", ")}`,
+            relatedPost: post._id,
+          });
+        } catch (err: any) {
+          console.error(
+            `Failed to publish post ${post._id} :`,
+            err?.response?.data || err?.message,
+          );
+          post.status = "failed";
+          await post.save();
+        }
       }
-    } catch (error) {}
+      if (postsToPublished.length > 0) {
+        console.log(
+          `Evaluated ${postsToPublished.length} posts at ${now.toISOString()}`,
+        );
+      }
+    } catch (error) {
+      console.error("Error in scheduler:", error);
+    }
   });
+  console.log("Scheduler service initialized.");
 };
