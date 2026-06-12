@@ -42,7 +42,10 @@ const pollLeonardoJob = async (
     } catch (err: any) {
       console.error("Polling error:", err?.response?.data || err.message);
     }
+
+    await new Promise((resolve) => setTimeout(resolve, delay));
   }
+  throw new Error("Leonardo.ai generation timed out.");
 };
 
 // Generate post
@@ -228,6 +231,8 @@ export const schedulePost = async (
       scheduledFor,
       status,
     });
+
+    res.status(201).json(post);
   } catch (error: any) {
     res.status(500).json({ message: error?.message || "Server error" });
   }
