@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import api from "../api/axios";
 
 interface User {
@@ -46,7 +46,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     api.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
   };
 
-  const logout = () => {};
+  const logout = () => {
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    delete api.defaults.headers.common["Authorization"];
+  };
 
   return (
     <AuthContext.Provider
@@ -62,4 +68,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };
