@@ -19,7 +19,7 @@ export default function Login() {
     setLoading(true);
     try {
       const { data } = await api.post(
-        `/api/auth${loginState ? "login" : "register"}`,
+        `/api/auth/${loginState ? "login" : "register"}`,
         { name, email, password },
       );
 
