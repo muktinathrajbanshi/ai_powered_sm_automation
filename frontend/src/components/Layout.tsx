@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Sidebar from "./Sidebar";
-import { Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { MenuIcon } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
@@ -29,6 +29,10 @@ const Layout = () => {
         />
       </div>
     );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
   }
 
   return (
