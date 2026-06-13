@@ -37,4 +37,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
     setIsLoading(false);
   }, []);
+
+  const login = (userData: User, newToken: string) => {
+    setUser(userData);
+    setToken(newToken);
+    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("token", newToken);
+    api.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+  };
+
+  const logout = () => {};
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        token,
+        isLoading,
+        login,
+        logout,
+        isAuthenticated: !!token,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
