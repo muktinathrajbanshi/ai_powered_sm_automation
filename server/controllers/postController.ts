@@ -59,12 +59,10 @@ export const generatePost = async (
 
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      res
-        .status(400)
-        .json({
-          message:
-            "Gemini API Key is missing. Please add it to your server/.env file.",
-        });
+      res.status(400).json({
+        message:
+          "Gemini API Key is missing. Please add it to your server/.env file.",
+      });
       return;
     }
 

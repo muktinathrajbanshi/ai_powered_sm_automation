@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { dummyPostsData, PLATFORMS } from "../assets/assets";
+import { PLATFORMS } from "../assets/assets";
 import {
   ArrowRightIcon,
   CalendarDaysIcon,
@@ -155,7 +155,7 @@ const Scheduler = () => {
                   {mediaFile.type.startsWith("image/") ? (
                     <img
                       src={URL.createObjectURL(mediaFile)}
-                      alt="prview"
+                      alt="preview"
                       className="w-full h-40 object-cover"
                     />
                   ) : (
