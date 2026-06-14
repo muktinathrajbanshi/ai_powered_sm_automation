@@ -190,10 +190,6 @@ export const schedulePost = async (
   res: Response,
 ): Promise<void> => {
   try {
-    console.log("BODY:", req.body);
-    console.log("FILE:", req.file);
-    console.log("USER:", req.user);
-
     const { content, platforms, scheduledFor, status } = req.body;
 
     // Parse platforms if it comes as a stringified array from FormData

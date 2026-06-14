@@ -20,7 +20,7 @@ const postSchema = new mongoose.Schema(
         ],
       },
     ],
-    scheduleFor: { type: Date, required: true },
+    scheduledFor: { type: Date, required: true },
     status: {
       type: String,
       enum: ["draft", "scheduled", "published", "failed"],
