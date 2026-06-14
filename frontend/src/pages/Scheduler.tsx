@@ -31,7 +31,7 @@ const Scheduler = () => {
 
   useEffect(() => {
     (async () => await fetchPosts())();
-    const interval = setInterval(async () => await fetchPosts(), 1000);
+    const interval = setInterval(async () => await fetchPosts(), 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -45,11 +45,46 @@ const Scheduler = () => {
 
   const handleSchedule = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (selectedPlatforms.length === 0) {
+      toast.error("Select at least one platform");
+      return;
+    }
+    if (!scheduledDate || !scheduledTime) {
+      toast.error("Select data and time");
+      return;
+    }
+    if (selectedPlatforms.includes("instagram") && !mediaFile) {
+      toast.error("Instagram requires an image or video");
+      return;
+    }
+
+    const scheduledFor = new Date(
+      `${scheduledDate}T${scheduledTime}`,
+    ).toISOString();
+    const formData = new FormData();
+    formData.append("content", content);
+    formData.append("scheduledFor", scheduledFor);
+    formData.append("status", "scheduled");
+    formData.append("platforms", JSON.stringify(selectedPlatforms));
+    if (mediaFile) formData.append("media", mediaFile);
+
     setLoading(true);
-    setTimeout(() => {
+    try {
+      await api.post("/api/posts", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      toast.success("Post scheduled!");
+      setContent("");
+      setScheduledDate("");
+      setScheduledTime("");
+      setSelectedPlatforms([]);
+      setMediaFile(null);
+      fetchPosts();
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || error.message);
+    } finally {
       setLoading(false);
-      setPosts((prev) => [...prev, dummyPostsData[0]]);
-    }, 1000);
+    }
   };
 
   return (
